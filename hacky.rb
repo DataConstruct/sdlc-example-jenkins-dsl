@@ -65,7 +65,7 @@ data['items'].each do |item|
   app_name = repo_configs.key?('app') ? repo_configs['app'] : repo_name
 
   groovy_output = File.join(File.dirname(File.expand_path(__FILE__)),'src', 'jobdsl', 'jobs.groovy')
-  File.open(groovy_output, "a") do |file|
+  File.open(groovy_output, "a+") do |file|
     file.puts  Templater.new(app_name, repo_full_name).render
   end
 end
