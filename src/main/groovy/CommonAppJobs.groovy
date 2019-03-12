@@ -27,10 +27,10 @@ class CommonAppJobs {
         }
     }
 
-
     void build(dslFactory) {
         this.buildAndTestPR(dslFactory)
         this.buildAndTest(dslFactory)
+        this.deployToPrd(dslFactory)
         AppDirectory.registerApp(appName, this.getBuildAndTestJobName())
     }
 
@@ -114,7 +114,39 @@ linchpin build
                 shell('''
 linchpin build
 linchpin push
-linchpin deploy      
+tar -zcvf archive.tar.gz --exclude=./archive.tar.gz ./
+''')
+            }
+
+            publishers {
+                archiveArtifacts("archive.tar.gz")
+                wsCleanup()
+            }
+        }
+    }
+
+    void deployToPrd(dslFactory) {
+        dslFactory.freeStyleJob("${this.getDeployToPRDJobName()}") {
+            throttleConcurrentBuilds {
+                maxPerNode(1)
+                maxTotal(1)
+            }
+
+            logRotator(-1, -1, -1, 5)
+
+            concurrentBuild()
+
+            steps {
+                copyArtifacts("${this.getBuildAndTestJobName()}") {
+                    buildSelector {
+                        latestSuccessful(true)
+                    }
+                }
+
+                shell('''
+gzip -dc archive.tar.gz | tar xf -
+rm archive.tar.gz
+linchpin deploy
 ''')
             }
 
@@ -124,9 +156,9 @@ linchpin deploy
         }
     }
 
-    GString getBuildAndTestPRJobName() { return "${this.appName}_0_Build_and_Test_PR"; }
+    GString getBuildAndTestPRJobName() { return "${this.appName}_0_Build_and_Test_PR" }
 
-    GString getBuildAndTestJobName() { return "${this.appName}_1_Build_and_Test"; }
+    GString getBuildAndTestJobName() { return "${this.appName}_1_Build_and_Test" }
 
-    GString getDeployToPRDJobName() { return "${this.appName}_3_Deploy_to_PRD"; }
+    GString getDeployToPRDJobName() { return "${this.appName}_3_Deploy_to_PRD" }
 }
