@@ -121,6 +121,7 @@ tar -zcvf archive.tar.gz --exclude=./archive.tar.gz ./*
             publishers {
                 archiveArtifacts("archive.tar.gz")
                 wsCleanup()
+                buildPipelineTrigger("${this.getDeployToPRDJobName()}")
             }
         }
     }
