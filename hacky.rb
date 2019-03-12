@@ -19,10 +19,11 @@ class Templater
   end
 end
 
-
+groovy_output = File.join(File.dirname(File.expand_path(__FILE__)),'src', 'jobdsl', 'jobs.groovy')
 uri = URI "https://api.github.com/search/code?q=path:/config%20user:DataConstruct%20extension:.yml&page=1"
 req = Net::HTTP::Get.new(uri)
 req.add_field('Authorization', "token #{ENV['GITHUB_TOKEN']}")
+File.delete(groovy_output) if File.exist?(groovy_output)
 
 res = Net::HTTP.start(uri.host, 443, use_ssl: true) do |http|
   http.request(req)
@@ -64,8 +65,11 @@ data['items'].each do |item|
 
   app_name = repo_configs.key?('app') ? repo_configs['app'] : repo_name
 
-  groovy_output = File.join(File.dirname(File.expand_path(__FILE__)),'src', 'jobdsl', 'jobs.groovy')
   File.open(groovy_output, "a+") do |file|
     file.puts  Templater.new(app_name, repo_full_name).render
   end
+end
+
+File.open(groovy_output, "a+") do |file|
+  file.puts  'AppDirectory.build(this)'
 end

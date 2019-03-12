@@ -31,6 +31,7 @@ class CommonAppJobs {
     void build(dslFactory) {
         this.buildAndTestPR(dslFactory)
         this.buildAndTest(dslFactory)
+        AppDirectory.registerApp(appName, this.getBuildAndTestJobName())
     }
 
     void buildAndTestPR(dslFactory) {
