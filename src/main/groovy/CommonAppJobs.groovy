@@ -136,6 +136,10 @@ tar -zcvf archive.tar.gz --exclude=./archive.tar.gz ./*
             logRotator(-1, -1, -1, 5)
 
             concurrentBuild()
+            
+            triggers {
+                upstream("${this.getBuildAndTestJobName()}", 'SUCCESS')
+            }
 
             steps {
                 copyArtifacts("${this.getBuildAndTestJobName()}") {
