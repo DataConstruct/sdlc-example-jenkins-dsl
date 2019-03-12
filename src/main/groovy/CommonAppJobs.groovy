@@ -114,7 +114,7 @@ linchpin build
                 shell('''
 linchpin build
 linchpin push
-tar -zcvf archive.tar.gz --exclude=./archive.tar.gz ./
+tar -zcvf archive.tar.gz --exclude=./archive.tar.gz ./*
 ''')
             }
 
