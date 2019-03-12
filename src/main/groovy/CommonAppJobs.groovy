@@ -114,7 +114,7 @@ linchpin build
                 shell('''
 linchpin build
 linchpin push
-tar -zcvf archive.tar.gz --exclude=./archive.tar.gz ./*
+tar -zcvf archive.tar.gz --exclude=./archive.tar.gz ./*  ./.git
 ''')
             }
 
@@ -136,7 +136,7 @@ tar -zcvf archive.tar.gz --exclude=./archive.tar.gz ./*
             logRotator(-1, -1, -1, 5)
 
             concurrentBuild()
-            
+
             triggers {
                 upstream("${this.getBuildAndTestJobName()}", 'SUCCESS')
             }
