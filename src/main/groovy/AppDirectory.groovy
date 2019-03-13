@@ -20,7 +20,7 @@ class AppDirectory {
                         enableManualTriggers(true)
                         pipelineInstances(1)
                         pipelines {
-                            component("${app} Build And Deploy Pipline", "${jobs.getBuildAndTestPRJobName()}")
+                            component("${app} Build And Deploy Pipline", "${jobs.getBuildAndTestJobName()}")
                             component("Restart STG", "${jobs.getrestartSTGJobName()}")
                             component("Restart PRD", "${jobs.getrestartPRDJobName()}")
                         }
