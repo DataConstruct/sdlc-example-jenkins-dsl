@@ -18,11 +18,11 @@ class AppDirectory {
                         allowRebuild(true)
                         columns(1)
                         enableManualTriggers(true)
-                        pipelineInstances(0)
+                        pipelineInstances(1)
                         pipelines {
                             component("${app} Build And Deploy Pipline", "${jobName}")
                         }
-                        showAggregatedPipeline(true)
+                        showAggregatedPipeline(false)
                         showAvatars(false)
                         showChangeLog(false)
                         showDescription(false)
