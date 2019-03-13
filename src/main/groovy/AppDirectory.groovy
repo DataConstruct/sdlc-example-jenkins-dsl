@@ -24,7 +24,7 @@ class AppDirectory {
                             component("Restart STG", "${jobs.getrestartSTGJobName()}")
                             component("Restart PRD", "${jobs.getrestartPRDJobName()}")
                         }
-                        showAggregatedPipeline(false)
+                        showAggregatedPipeline(true)
                         showAvatars(false)
                         showChangeLog(false)
                         showDescription(false)
