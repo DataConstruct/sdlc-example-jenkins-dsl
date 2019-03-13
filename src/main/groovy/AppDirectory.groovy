@@ -12,7 +12,7 @@ class AppDirectory {
                 def apps = appMap.keySet().toArray()
                 for (int appIndex = 0; appIndex < apps.size(); appIndex++) {
                     def app = apps[appIndex]
-                    def jobName = appMap.get(app)
+                    def jobs = appMap.get(app)
                     deliveryPipelineView("${app}") {
                         allowPipelineStart(true)
                         allowRebuild(true)

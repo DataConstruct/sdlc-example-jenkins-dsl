@@ -34,7 +34,7 @@ class CommonAppJobs {
         this.deployToPrd(dslFactory)
         this.restartStg(dslFactory)
         this.restartPrd(dslFactory)
-        AppDirectory.registerApp(appName, this.getBuildAndTestJobName())
+        AppDirectory.registerApp(appName, this)
     }
 
     void buildAndTestPR(dslFactory) {
