@@ -220,7 +220,7 @@ linchpin deploy
             }
 
             steps {
-                shell("kubernetes-restart ${this.appName} cicd-example")
+                shell("KUBECONFIG=~/.kube/config kubernetes-restart ${this.appName} cicd-example")
             }
 
             publishers {
@@ -254,7 +254,7 @@ linchpin deploy
             }
 
             steps {
-                shell("kubernetes-restart ${this.appName} cicd-example")
+                shell("KUBECONFIG=~/.kube/config kubernetes-restart ${this.appName} cicd-example")
             }
 
             publishers {
