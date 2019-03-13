@@ -63,7 +63,7 @@ data['items'].each do |item|
   end
   repo_configs = YAML.load_file(default_config)
 
-  app_name = repo_configs.key?('app') ? repo_configs['app'] : repo_name
+  app_name = repo_configs && repo_configs.key?('app') ? repo_configs['app'] : repo_name
 
   File.open(groovy_output, "a+") do |file|
     file.puts  Templater.new(app_name, repo_full_name).render
