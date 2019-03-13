@@ -1,9 +1,9 @@
 class AppDirectory {
-    static HashMap<String,HashMap> appMap = new LinkedHashMap<String,HashMap>()
+    static HashMap<String,HashMap> appMap = new LinkedHashMap<String,CommonAppJobs>()
 
-    static registerApp(appName, jobName)
+    static registerApp(appName, jobs)
     {
-        appMap.put(appName, jobName)
+        appMap.put(appName, jobs)
     }
 
     static build(dslFactory) {
@@ -20,7 +20,9 @@ class AppDirectory {
                         enableManualTriggers(true)
                         pipelineInstances(1)
                         pipelines {
-                            component("${app} Build And Deploy Pipline", "${jobName}")
+                            component("${app} Build And Deploy Pipline", "${jobs.getBuildAndTestPRJobName()}")
+                            component("Restart STG", "${jobs.getrestartSTGJobName()}")
+                            component("Restart PRD", "${jobs.getrestartPRDJobName()}")
                         }
                         showAggregatedPipeline(false)
                         showAvatars(false)
